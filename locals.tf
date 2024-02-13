@@ -35,6 +35,7 @@ locals {
 
   keys           = { for k, v in local.key_opts : k => v if v.prevent_destroy }
   ephemeral_keys = { for k, v in local.key_opts : k => v if v.prevent_destroy == false }
+  acl            = { for a in var.acl : a.key => a }
 
   crypto_keys = merge(
     google_kms_crypto_key.key,
@@ -42,10 +43,11 @@ locals {
   )
 
   encrypters_list = flatten([
-    for rule in var.acl : [
-      for identity in lookup(rule, "encrypters", []) : {
-        key      = rule.key
-        key_id   = local.crypto_keys[rule.key].id
+    for key in var.keys : [
+      for identity in distinct(concat(var.encrypters, try(local.acl[key].encrypters, []))) :
+      {
+        key      = key
+        key_id   = local.crypto_keys[key].id
         identity = identity
         role     = "roles/cloudkms.cryptoKeyEncrypter"
         type     = "encrypter"
@@ -54,10 +56,10 @@ locals {
   ])
 
   decrypters_list = flatten([
-    for rule in var.acl : [
-      for identity in lookup(rule, "decrypters", []) : {
-        key      = rule.key
-        key_id   = local.crypto_keys[rule.key].id
+    for key in var.keys : [
+      for identity in distinct(concat(var.decrypters, try(local.acl[key].decrypters, []))) : {
+        key      = key
+        key_id   = local.crypto_keys[key].id
         identity = identity
         role     = "roles/cloudkms.cryptoKeyDecrypter"
         type     = "decrypter"
@@ -66,10 +68,10 @@ locals {
   ])
 
   owners_list = flatten([
-    for rule in var.acl : [
-      for identity in lookup(rule, "owners", []) : {
-        key      = rule.key
-        key_id   = local.crypto_keys[rule.key].id
+    for key in var.keys : [
+      for identity in distinct(concat(var.owners, try(local.acl[key].owners, []))) : {
+        key      = key
+        key_id   = local.crypto_keys[key].id
         identity = identity
         role     = "roles/owner"
         type     = "owner"

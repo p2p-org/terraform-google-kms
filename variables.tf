@@ -47,8 +47,26 @@ variable "prevent_destroy" {
   default     = true
 }
 
+variable "owners" {
+  description = "Owners shared for all the managed keys."
+  type        = list(string)
+  default     = []
+}
+
+variable "encrypters" {
+  description = "Encrypters shared for all the managed keys."
+  type        = list(string)
+  default     = []
+}
+
+variable "decrypters" {
+  description = "Decrypters shared for all the managed keys."
+  type        = list(string)
+  default     = []
+}
+
 variable "acl" {
-  description = "Access control list for the managed keys."
+  description = "Additional ACL for for the managed keys."
   type        = list(any)
   default     = []
 }

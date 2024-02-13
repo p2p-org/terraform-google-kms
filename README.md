@@ -9,11 +9,7 @@ The resources/services/activations/deletions that this module will create/trigge
 - Create IAM role bindings for owners, encrypters, decrypters
 
 ## Compatibility
-This module is meant for use with Terraform 0.13+ and tested using Terraform 1.0+. If you find incompatibilities using Terraform >=0.13, please open an issue.
- If you haven't
-[upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
-0.12.x-compatible version of this module, the last released version
-intended for Terraform 0.12.x is [v1.2.0](https://registry.terraform.io/modules/terraform-google-modules/-kms/google/v1.2.0).
+This module is meant for use with Terraform 1.0+.
 
 ## Usage
 
@@ -21,8 +17,7 @@ Basic usage of this module is as follows:
 
 ```hcl
 module "kms" {
-  source  = "terraform-google-modules/kms/google"
-  version = "~> 1.2"
+  source  = "github.com/p2p-org/terraform-google-kms?ref=v2.0.0"
 
   project_id         = "<PROJECT ID>"
   location           = "europe"
@@ -36,14 +31,13 @@ module "kms" {
     },
   ]
 
+  owners = ["group:one@example.com","user:two@example.com"]
+
+  ## additional ACLs
   acl = [
     {
-      key = "foo"
-      owners = ["group:one@example.com","user:two@example.com"]
-    },
-    {
       key = "spam"
-      encrypters = ["serviceAccount:one@example.com"]
+      decrypters = ["serviceAccount:one@example.com"]
     }
   ]
 }
@@ -57,7 +51,10 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| acl | Access control list for the managed keys. | `list(any)` | `[]` | no |
+| owners | Owners shared for all the managed keys. | `list(string)` | `[]` | | no |
+| encrypters | Encrypters shared for all the managed keys. | `list(string)` | `[]` | | no |
+| decrypters | Decrypters shared for all the managed keys. | `list(string)` | `[]` | | no |
+| acl | Additional ACL for for the managed keys. | `list(any)` | `[]` | no |
 | existing\_keyring | Use existing keyring | `bool` | `false` | no |
 | key\_opts | Specifies key specific options. | `list(any)` | `[]` | no |
 | keyring | Keyring name. | `string` | n/a | yes |
@@ -70,7 +67,6 @@ Functional examples are included in the
 
 | Name | Description |
 |------|-------------|
-| acl | Access control list provided. |
 | existing\_keyring | Existing keyring is used, i.e. keyring has been created. |
 | keyring\_id | Self link of the keyring. |
 | keyring\_name | Name of the keyring. |
@@ -84,13 +80,6 @@ Functional examples are included in the
 ## Requirements
 
 These sections describe requirements for using this module.
-
-### Software
-
-The following dependencies must be available:
-
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.13.0
-- [Terraform Provider for GCP][terraform-provider-gcp] plugin v3.0
 
 ### Service Account
 

@@ -15,16 +15,12 @@
  */
 
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.0"
   required_providers {
 
     google = {
       source  = "hashicorp/google"
       version = ">= 3.53, < 5.0"
     }
-  }
-
-  provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-kms/v2.1.0"
   }
 }

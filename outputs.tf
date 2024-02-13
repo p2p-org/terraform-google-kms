@@ -44,13 +44,6 @@ output "keyring_name" {
   value       = var.keyring
 }
 
-output "acl" {
-  description = "Access control list provided."
-  value = [for rule in var.acl :
-    merge(rule, { key_id = local.crypto_keys[rule.key].id })
-  ]
-}
-
 output "kms_keys" {
   description = "Managed kms keys details."
   value = { for k, v in local.crypto_keys : k => {
