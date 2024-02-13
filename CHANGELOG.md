@@ -7,6 +7,31 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://www.github.com/terraform-google-modules/terraform-google-kms/compare/v2.0.1...v2.1.0) (2021-12-13)
+
+
+### Features
+
+* update TPG version constraints to allow 4.0 ([#50](https://www.github.com/terraform-google-modules/terraform-google-kms/issues/50)) ([14d80d7](https://www.github.com/terraform-google-modules/terraform-google-kms/commit/14d80d70966ff2ea64481cca83e8acbfff3fa65b))
+
+### [2.0.1](https://www.github.com/terraform-google-modules/terraform-google-kms/compare/v2.0.0...v2.0.1) (2021-08-11)
+
+
+### Bug Fixes
+
+* Create dependency with grant ([#46](https://www.github.com/terraform-google-modules/terraform-google-kms/issues/46)) ([9f4129d](https://www.github.com/terraform-google-modules/terraform-google-kms/commit/9f4129d87799c1c22c388e1a3808717b09a58ab3))
+
+## [2.0.0](https://www.github.com/terraform-google-modules/terraform-google-kms/compare/v1.2.0...v2.0.0) (2021-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Terraform 0.13 constraint and module attribution (#40)
+
+### Features
+
+* add Terraform 0.13 constraint and module attribution ([#40](https://www.github.com/terraform-google-modules/terraform-google-kms/issues/40)) ([e46c56c](https://www.github.com/terraform-google-modules/terraform-google-kms/commit/e46c56c683961ceb750684409cbdfdff4492031d))
+
 ## [1.2.0](https://www.github.com/terraform-google-modules/terraform-google-kms/compare/v1.1.1...v1.2.0) (2020-06-01)
 
 
