@@ -41,7 +41,7 @@ output "keyring_id" {
 
 output "keyring_name" {
   description = "Name of the keyring."
-  value       = var.keyring
+  value       = local.keyring_name
 }
 
 output "kms_keys" {

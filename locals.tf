@@ -16,8 +16,9 @@
 
 locals {
   keyring_id   = var.existing_keyring ? data.google_kms_key_ring.key_ring[0].id : google_kms_key_ring.key_ring[0].id
-  key_opts_map = { for opts in var.key_opts : opts.key => opts }
+  keyring_name = var.existing_keyring ? data.google_kms_key_ring.key_ring[0].name : google_kms_key_ring.key_ring[0].name
 
+  key_opts_map = { for opts in var.key_opts : opts.key => opts }
   key_opts_default = {
     rotation_period  = "86400s"
     algorithm        = "GOOGLE_SYMMETRIC_ENCRYPTION"
